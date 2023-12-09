@@ -52,7 +52,7 @@ with mysql.connector.connect(
             # Write the DataFrame to a raw table
             engine_str = f"mysql+mysqlconnector://{database_config['username']}:{database_config['password']}@{database_config['host']}:{database_config['port']}/{database_config['database']}"
             engine = create_engine(engine_str)
-            df.to_sql(raw_table_name, con=engine, index=False, if_exists='replace')
+            df.to_sql(raw_table_name, con=engine, index=False, if_exists='append')
 
 
             print(f"Data loaded into raw table {raw_table_name} from file: {file}")

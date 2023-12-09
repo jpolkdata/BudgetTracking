@@ -1,17 +1,28 @@
 import os
 import json
+import glob
 
-# Load configuration from the config.json file
+# Load our configuration from the config.json file
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
 
-# Access configuration values
 sources = config['sources']
-database = config['database']
+database_config = config['database']
 
+# Iterate over sources and ingest data into staging tables
 for source in sources:
-    file_path = os.path.join(source['folder'], source['file_pattern'])
-    print(source['name'])
-    print(source['folder'])
-    print(source['file_pattern'])
-    print(file_path)
+    source_name = source['name']
+    folder_path = source['folder']
+    file_pattern = source['file_pattern']
+
+    # Construct the full file path with the wildcard
+    file_path = os.path.join(folder_path, file_pattern)
+
+    # Use glob to find all files matching the pattern
+    matching_files = glob.glob(file_path)
+
+    # Iterate over each matching file
+    for file in matching_files:
+        
+        print(file)
+
